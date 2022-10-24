@@ -1,0 +1,13 @@
+#root {
+    margin: 0;
+}
+
+input {
+    height: 25px;
+    padding: 5px;
+}
+
+p {
+    color: white;
+    font-weight: bolder;
+}
