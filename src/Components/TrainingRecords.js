@@ -1,5 +1,6 @@
 import React from 'react';
-// import shortid from 'shortid';
+import shortid from 'shortid';
+import { BsXLg } from 'react-icons/bs';
 
 export default class TrainingRecords extends React.Component {
   state = {
@@ -27,12 +28,18 @@ export default class TrainingRecords extends React.Component {
   handleShow = (e) => {
     const {date, number, data} = this.state;
     e.preventDefault();
-    data.setState(
-        data => [...data, {
-          showDate: date,
-          showNumber: number,
-        }]
-    );
+    this.setState({
+      data: [...this.state.data, {
+        id: shortid.generate(),
+        showDate: date,
+        showNumber: number,
+      }]
+    });
+  };
+
+handleRemove = (item) => {
+  this.setState((prev) =>
+        prev.filter((i) => i.id !== item.id));
   };
 
   render() {
@@ -50,27 +57,21 @@ export default class TrainingRecords extends React.Component {
             <tbody>
             <tr>
               <td>Дата</td>
-              <td> Пройдено</td>
+              <td>Пройдено</td>
               <td>Действия</td>
             </tr>
-            </tbody>
             {
               data.map((item) => (
-                  <tr>
+                  <tr key={item.id}>
                     <td>{item.showDate}</td>
                     <td>{item.showNumber}</td>
-                    <td>Действия</td>
+                    <td><BsXLg onClick={() => this.handleRemove(item)}/></td>
                   </tr>
               ))
             }
+            </tbody>
           </table>
         </>
     );
   }
 }
-
-
-
-
-
-
