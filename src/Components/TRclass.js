@@ -38,8 +38,9 @@ export default class TrainingRecords extends React.Component {
   };
 
 handleRemove = (item) => {
-  this.setState((prev) =>
-        prev.filter((i) => i.id !== item.id));
+  const {data} = this.state;
+  this.setState((data) =>
+      data.filter((i) => i.id !== item.id));
   };
 
   render() {
