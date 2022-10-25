@@ -1,5 +1,5 @@
 import './App.css';
-import TrainingRecords from './Components/TRclass';
+import {TrainingRecords} from './Components/TRfunction';
 
 function App() {
   return (

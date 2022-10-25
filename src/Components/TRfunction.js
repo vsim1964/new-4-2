@@ -3,29 +3,28 @@ import shortid from 'shortid';
 import { BsXLg } from 'react-icons/bs';
 
 export const TrainingRecords = () => {
-  const [training, setTraining] = useState({
+  const [training, setTraining] = useState([{
+    id: 0,
     date: '',
     number: '',
-    data: []
-  });
+  }]);
 
+  const data = [];
   const handleSubmit= (e) => {
     e.preventDefault();
     const newTraining =  {id: shortid.generate(), date: e.target.value, number: e.target.value};
-    setTraining({
-      data: [...training.data, newTraining]
-    });
+    data.push(newTraining);
+    };
+
+  const handleRemove = (id) => {
+    e.preventDefault();
+    setTraining(prevData => prevData.filter(item => item.id !== id));
   }
-
-  const handleRemove = (e) => {
-
-  }
-
   return (
       <>
-        <form>
-          <input type="date"/>
-          <input type="number"/>
+        <form onSubmit={handleSubmit}>
+          <input type="date" value={training.date}/>
+          <input type="number" value={training.number}/>
           <button>Добавить тренировку</button>
         </form>
         <table>
@@ -40,7 +39,7 @@ export const TrainingRecords = () => {
                 <tr key={item.id}>
                   <td>{item.date}</td>
                   <td>{item.number}</td>
-                  {/*<td><BsXLg onClick={() => handleRemove(item)}/></td>*/}
+                  <td><BsXLg onClick={() => handleRemove(item.id)}/></td>
                 </tr>
             ))
           }
