@@ -3,29 +3,45 @@ import shortid from 'shortid';
 import { BsXLg } from 'react-icons/bs';
 
 export const TrainingRecords = () => {
+
+  const [date, setDate] = useState('');
+  const handleDate = (e) => {
+    e.preventDefault();
+    setDate(e.target.value);
+  };
+
+  const [number, setNumber] = useState('');
+  const handleNumber = (e) => {
+    e.preventDefault();
+    setNumber(e.target.value);
+  };
+
   const [training, setTraining] = useState([{
     id: 0,
-    date: '',
-    number: '',
+    showDate: '',
+    showNumber: ''
   }]);
 
-  const data = [];
-  const handleSubmit= (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
-    const newTraining =  {id: shortid.generate(), date: e.target.value, number: e.target.value};
-    data.push(newTraining);
+    const newTraining = {
+      id: shortid.generate(),
+      showDate: date,
+      showNumber: number
     };
+    setTraining((prev) => [...prev, newTraining] )
+  }
 
   const handleRemove = (id) => {
-    e.preventDefault();
-    setTraining(prevData => prevData.filter(item => item.id !== id));
+      setTraining(prevData => prevData.filter(item => item.id !== id));
   }
+
   return (
       <>
-        <form onSubmit={handleSubmit}>
-          <input type="date" value={training.date}/>
-          <input type="number" value={training.number}/>
-          <button>Добавить тренировку</button>
+        <form>
+          <input type="date" value={date} onChange={handleDate}/>
+          <input type="number" value={number} onChange={handleNumber}/>
+          <button onClick={handleClick}>Добавить тренировку</button>
         </form>
         <table>
           <tbody>
@@ -35,10 +51,10 @@ export const TrainingRecords = () => {
             <td>Действия</td>
           </tr>
           {
-            data.map((item) => (
+            training.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.date}</td>
-                  <td>{item.number}</td>
+                  <td>{item.showDate}</td>
+                  <td>{item.showNumber}</td>
                   <td><BsXLg onClick={() => handleRemove(item.id)}/></td>
                 </tr>
             ))
@@ -47,5 +63,5 @@ export const TrainingRecords = () => {
         </table>
       </>
   );
-}
+};
 
